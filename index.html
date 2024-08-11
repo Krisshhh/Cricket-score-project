@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Cricket Score</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <div class="container">
+    <p id="team">Team 1 Batting</p>
+    <p>Current Over: <span id="current-over"></span></p>
+
+      <div class="scoreboard">
+        <div class="button">1</div>
+        <div class="button">2</div>
+        <div class="button">3</div>
+        <div class="button">4</div>
+        <div class="button">5</div>
+        <div class="button">6</div>
+      </div>
+      <div class="reportball">
+         <div class="dotball">Dot Ball</div>
+         <div class="wkt">Wicket</div>
+         <div class="wideball">Wide Ball</div>
+         <div class="noball">No Ball</div>
+      </div>
+      <div class="result">
+        <p>Current Score: <span id="score">0</span> Runs</p>
+        <p>Wickets: <span id="wickets">0</span></p>
+        <p>Overs: <span id="overs">0</span>.<span id="balls">0</span></p>
+
+
+      </div>
+    </div>
+    <script>
+      let score = 0;
+      let wickets = 0;
+      let balls = 0;
+      let overs = 0;
+      let team1Score = 0;
+      let team2Score = 0;
+      let currentTeam = 1;
+      let gameEnded = false;
+      let currentOverRuns = [];
+      const maxOvers = 2;
+      const maxBallsPerOver = 6;
+      const maxWickets = 10;
+
+      const scoreDisplay = document.getElementById('score');
+      const wicketsDisplay = document.getElementById('wickets');
+      const oversDisplay = document.getElementById('overs');
+      const ballsDisplay = document.getElementById('balls');
+      const teamDisplay = document.getElementById('team');
+      const currentOverDisplay = document.getElementById('current-over');
+      const buttons = document.querySelectorAll('.button');
+      const dotBall = document.querySelector('.dotball');
+      const wicket = document.querySelector('.wkt');
+      const wideBall = document.querySelector('.wideball');
+      const noBall = document.querySelector('.noball');
+
+      function updateScore(runs) {
+        if (gameEnded) return;
+        score += runs;
+        scoreDisplay.textContent = score;
+        currentOverRuns.push(runs);
+        updateCurrentOverDisplay();
+        if (currentTeam === 2 && score > team1Score) {
+          alert('Team 2 wins!');
+          gameEnded = true;
+          disableButtons();
+        } else {
+          updateBalls();
+        }
+      }
+
+      function updateBalls() {
+        if (gameEnded) return;
+        balls += 1;
+        if (balls >= maxBallsPerOver) {
+          balls = 0;
+          overs += 1;
+          currentOverRuns = [];
+        }
+        ballsDisplay.textContent = balls;
+        oversDisplay.textContent = overs;
+
+        if (overs >= maxOvers) {
+          endInnings();
+        }
+      }
+
+      function updateCurrentOverDisplay() {
+        currentOverDisplay.textContent = currentOverRuns.join(', ');
+      }
+
+      function endInnings() {
+        if (currentTeam === 1) {
+          team1Score = score;
+          currentTeam = 2;
+          resetInnings();
+          teamDisplay.textContent = 'Team 2 Batting';
+        } else {
+          team2Score = score;
+          if (team2Score > team1Score) {
+            alert('Team 2 wins!');
+          } else if (team2Score < team1Score) {
+            alert('Team 1 wins!');
+          } else {
+            alert('Match Drawn!');
+          }
+          gameEnded = true;
+          disableButtons();
+        }
+      }
+
+      function resetInnings() {
+        score = 0;
+        wickets = 0;
+        balls = 0;
+        overs = 0;
+        currentOverRuns = [];
+        scoreDisplay.textContent = score;
+        wicketsDisplay.textContent = wickets;
+        ballsDisplay.textContent = balls;
+        oversDisplay.textContent = overs;
+        updateCurrentOverDisplay();
+      }
+
+      function disableButtons() {
+        buttons.forEach(button => button.disabled = true);
+        dotBall.disabled = true;
+        wicket.disabled = true;
+        wideBall.disabled = true;
+        noBall.disabled = true;
+      }
+
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const runs = parseInt(button.textContent);
+          updateScore(runs);
+        });
+      });
+
+      dotBall.addEventListener('click', () => {
+        if (gameEnded) return;
+        currentOverRuns.push(0);
+        updateCurrentOverDisplay();
+        updateBalls();
+      });
+
+      wicket.addEventListener('click', () => {
+        if (gameEnded) return;
+        wickets += 1;
+        wicketsDisplay.textContent = wickets;
+        currentOverRuns.push('W');
+        updateCurrentOverDisplay();
+        if (wickets >= maxWickets) {
+          endInnings();
+        } else {
+          updateBalls();
+        }
+      });
+
+      wideBall.addEventListener('click', () => {
+        if (gameEnded) return;
+        score += 1; 
+        scoreDisplay.textContent = score;
+        currentOverRuns.push('Wd');
+        updateCurrentOverDisplay();
+        if (currentTeam === 2 && score > team1Score) {
+          alert('Team 2 wins!');
+          gameEnded = true;
+          disableButtons();
+        }
+      });
+
+      noBall.addEventListener('click', () => {
+        if (gameEnded) return;
+        score += 1; 
+        scoreDisplay.textContent = score;
+        currentOverRuns.push('Nb');
+        updateCurrentOverDisplay();
+        if (currentTeam === 2 && score > team1Score) {
+          alert('Team 2 wins!');
+          gameEnded = true;
+          disableButtons();
+        }
+      });
+    </script>
+</body>
+</html>

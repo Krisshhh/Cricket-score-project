@@ -1,0 +1,82 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e7dfdf;
+  /* text-align: center; */
+}
+
+.container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 15px 30px rgba(0.5, 0.5, 0.5, 0.5); 
+  border-radius: 10px;
+  background-color: white;
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  text-align: center;
+}
+
+.button {
+  padding: 10px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #357ae8;
+}
+
+.reportball{
+   margin: 5%;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 10px;
+   text-align: center;
+}
+
+.wkt{
+   padding: 7px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.noball{
+   padding: 7px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.dotball{
+   padding: 7px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.wideball{
+   padding: 7px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#team{
+  text-align: center;
+}
