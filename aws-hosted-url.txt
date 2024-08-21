@@ -1,0 +1,6 @@
+http://cricket-score-project.s3-website.ap-south-1.amazonaws.com
+
+this is the URL for this project that I hosted through s3 on AWS. 
+Sometimes, if you aren't able to open it through link, do copy and paste it on browser ( such condition may arise as many browsers change the protocol to https instead of http )
+
+thanks for reading :)
